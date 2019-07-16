@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import pkg_resources
 import re
 import ssl
 import datetime
@@ -429,7 +430,7 @@ class ComunicacaoSefaz(Comunicacao):
             )
             xml = xml_declaration + xml
             # Faz o request com o servidor
-            result = requests.post(url, xml, headers=self._post_header(), cert=chave_cert, verify=False)
+            result = requests.post(url, xml, headers=self._post_header(), cert=chave_cert, verify=pkg_resources.resource_filename('pynfe', 'data/cert/icpbrasilv2.cer'))
             result.encoding = 'utf-8'
             return result
         except requests.exceptions.RequestException as e:
