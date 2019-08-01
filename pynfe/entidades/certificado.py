@@ -24,10 +24,10 @@ class CertificadoA1(Certificado):
     """Implementa a entidade do certificado eCNPJ A1, suportado pelo OpenSSL,
     e amplamente utilizado."""
 
-    caminho_arquivo = None
+    data = None
 
-    def __init__(self, caminho_arquivo=None):
-        self.caminho_arquivo = caminho_arquivo
+    def __init__(self, data=None):
+        self.data = data
         self.arquivos_temp = []
 
     def separar_arquivo(self, senha, caminho=False):
@@ -37,7 +37,7 @@ class CertificadoA1(Certificado):
 
         # Carrega o arquivo .pfx, erro pode ocorrer se a senha estiver errada ou formato invalido.
         try:
-            pkcs12 = crypto.load_pkcs12(open(self.caminho_arquivo, "rb").read(), senha)
+            pkcs12 = crypto.load_pkcs12(self.data, senha)
         except Exception as e:
             raise Exception('Falha ao carregar certificado digital A1. Verifique local e senha.')
 
