@@ -6,9 +6,9 @@ except ImportError:  # for pip <= 9.0.3
     from pip.req import parse_requirements as parse
 
 def requirements(f):
-    try
+    try:
         return [str(i.req) for i in parse(f, session=False)]
-    except
+    except:
         return [str(i.requirement) for i in parse(f, session=False)]
 
 setup(
