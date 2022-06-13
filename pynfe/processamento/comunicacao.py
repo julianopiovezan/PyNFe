@@ -193,6 +193,35 @@ class ComunicacaoSefaz(Comunicacao):
         
         return self._post(url, xml)
 
+
+    def consultar_nsu(self, cnpj: str, nsu: int):
+        """ 
+            O XML do pedido de distribuição suporta três tipos de consultas que são definidas de acordo com a tag
+            informada no XML. As tags são distNSU, consNSU e consChNFe.
+            a) distNSU – Distribuição de Conjunto de DF-e a Partir do NSU Informado
+            b) consNSU – Consulta DF-e Vinculado ao NSU Informado
+            c) consChNFe – Consulta de NF-e por Chave de Acesso Informada 
+        :param cnpj: CNPJ do interessado
+        :param nsu: NSU a ser consultado.
+        :return: 
+        """
+        url = self._get_url_an(consulta='DISTRIBUICAO')
+        raiz = etree.Element('distDFeInt', versao='1.01', xmlns=NAMESPACE_NFE)
+        etree.SubElement(raiz, 'tpAmb').text = str(self._ambiente)
+
+        if self.uf:
+            etree.SubElement(raiz, 'cUFAutor').text = CODIGOS_ESTADOS[self.uf.upper()]
+
+        etree.SubElement(raiz, 'CNPJ').text = cnpj
+
+        consNSU = etree.SubElement(raiz, 'consNSU')
+        etree.SubElement(consNSU, 'NSU').text = str(nsu).zfill(15)
+
+        xml = self._construir_xml_soap('NFeDistribuicaoDFe', raiz)
+        
+        return self._post(url, xml)
+
+
     def consulta_cadastro(self, modelo, cnpj):
         """
         Consulta de cadastro
