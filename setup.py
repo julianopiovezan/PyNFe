@@ -13,7 +13,7 @@ def requirements(f):
 
 setup(
     name='PyNFe',
-    version='0.8',
+    version='0.9',
     packages=find_packages(),
     package_data={
         'pynfe': ['data/cert/*.cer'],
