@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='PyNFe',
-    version='0.10',
+    version='0.11',
     packages=find_packages(),
     package_data={
         'pynfe': ['data/cert/*.cer'],
